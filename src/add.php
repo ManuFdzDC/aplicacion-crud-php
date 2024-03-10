@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">	
-	<title>Alta trabajador</title>
+	<title>Alta cliente</title>
 <!--	
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 -->	
@@ -31,27 +31,44 @@ Transacción de datos utilizando el método: POST
 if(isset($_POST['inserta'])) 
 {
 //Obtiene los datos (name, surname y age) a partir del formulario de alta por el método POST (Se envía a través del body del HTTP Request. No aparece en la URL)
-	$name = mysqli_real_escape_string($mysqli, $_POST['name']);
-	$surname = mysqli_real_escape_string($mysqli, $_POST['surname']);
-	$age = mysqli_real_escape_string($mysqli, $_POST['age']);
+	$id = mysqli_real_escape_string($mysqli, $_POST['id']);
+	$nombre = mysqli_real_escape_string($mysqli, $_POST['nombre']);
+	$apellido = mysqli_real_escape_string($mysqli, $_POST['apellido']);
+	$telefono = mysqli_real_escape_string($mysqli, $_POST['telefono']);
+	$direccion = mysqli_real_escape_string($mysqli, $_POST['direccion']);
+	$ciudad = mysqli_real_escape_string($mysqli, $_POST['ciudad']);
+	$pais = mysqli_real_escape_string($mysqli, $_POST['pais']);
+	$cp = mysqli_real_escape_string($mysqli, $_POST['cp']);
 /*Con mysqli_real_scape_string protege caracteres especiales en una cadena para ser usada en una sentencia SQL.
 Esta función es usada para crear una cadena SQL legal que se puede usar en una sentencia SQL. 
 Los caracteres codificados son NUL (ASCII 0), \n, \r, \, ', ", y Control-Z.*/
 
 //Comprueba si existen campos vacíos
-	if(empty($name) || empty($age) || empty($surname)) 
-	{
-		if(empty($name)) {
-			echo "<div>Campo nombre vacío.</div>";
-		}
+if(empty($nombre) || empty($apellido) || empty($telefono) || empty($direccion) || empty($ciudad) || empty($pais) || empty($cp))	{
+	if(empty($nombre)) {
+		echo "<font color='red'>Campo nombre vacío.</font><br/>";
+	}
 
-		if(empty($surname)) {
-			echo "<div>Campo apellido vacío</div>";
-		}
+	if(empty($apellido)) {
+		echo "<font color='red'>Campo apellido vacío.</font><br/>";
+	}
 
-		if(empty($age)) {
-			echo "<div>Campo edad vacío.</div>";
-		}
+	if(empty($telefono)) {
+		echo "<font color='red'>Campo telefono vacío.</font><br/>";
+	}
+
+	if(empty($direccion)) {
+		echo "<font color='red'>Campo direccion vacío.</font><br/>";
+	}
+	if(empty($ciudad)) {
+		echo "<font color='red'>Campo ciudad vacío.</font><br/>";
+	}
+	if(empty($pais)) {
+		echo "<font color='red'>Campo pais vacío.</font><br/>";
+	}
+	if(empty($cp)) {
+		echo "<font color='red'>Campo codigo postal vacío.</font><br/>";
+	}
 //Enlace a la página anterior
 		echo "<a href='javascript:self.history.back();'>Volver atras</a>";
 	} //fin si

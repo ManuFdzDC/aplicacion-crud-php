@@ -8,7 +8,7 @@ DB_PASSWORD: Contraseña del usuario e la BD
 */
 
 define('DB_HOST', 'mariadb');
-define('DB_NAME', 'clientes');
+define('DB_NAME', 'cliente');
 define('DB_USER', 'manuel');
 define('DB_PASSWORD', 'manuel');
 

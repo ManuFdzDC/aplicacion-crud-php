@@ -8,33 +8,50 @@ Transacción de datos utilizando el método: POST
 */
 if(isset($_POST['modifica'])) {
 	$id = mysqli_real_escape_string($mysqli, $_POST['id']);
-	$name = mysqli_real_escape_string($mysqli, $_POST['name']);
-	$surname = mysqli_real_escape_string($mysqli, $_POST['surname']);
-	$age = mysqli_real_escape_string($mysqli, $_POST['age']);
+	$nombre = mysqli_real_escape_string($mysqli, $_POST['nombre']);
+	$apellido = mysqli_real_escape_string($mysqli, $_POST['apellido']);
+	$telefono = mysqli_real_escape_string($mysqli, $_POST['telefono']);
+	$direccion = mysqli_real_escape_string($mysqli, $_POST['direccion']);
+	$ciudad = mysqli_real_escape_string($mysqli, $_POST['ciudad']);
+	$pais = mysqli_real_escape_string($mysqli, $_POST['pais']);
+	$cp = mysqli_real_escape_string($mysqli, $_POST['cp']);
 
-	if(empty($name) || empty($surname) || empty($age))	{
-		if(empty($name)) {
+	if(empty($nombre) || empty($apellido) || empty($telefono) || empty($direccion) || empty($ciudad) || empty($pais) || empty($cp))	{
+		if(empty($nombre)) {
 			echo "<font color='red'>Campo nombre vacío.</font><br/>";
 		}
 
-		if(empty($surname)) {
+		if(empty($apellido)) {
 			echo "<font color='red'>Campo apellido vacío.</font><br/>";
 		}
 
-		if(empty($age)) {
-			echo "<font color='red'>Campo edad vacío.</font><br/>";
+		if(empty($telefono)) {
+			echo "<font color='red'>Campo telefono vacío.</font><br/>";
+		}
+
+		if(empty($direccion)) {
+			echo "<font color='red'>Campo direccion vacío.</font><br/>";
+		}
+		if(empty($ciudad)) {
+			echo "<font color='red'>Campo ciudad vacío.</font><br/>";
+		}
+		if(empty($pais)) {
+			echo "<font color='red'>Campo pais vacío.</font><br/>";
+		}
+		if(empty($cp)) {
+			echo "<font color='red'>Campo codigo postal vacío.</font><br/>";
 		}
 	} //fin si
 	else 
 	{
 //Prepara una sentencia SQL para su ejecución. En este caso una modificación de un registro de la BD.				
-		$stmt = mysqli_prepare($mysqli, "UPDATE users SET name=?,surname=?,age=? WHERE id=?");
+		$stmt = mysqli_prepare($mysqli, "UPDATE cliente SET nombre=?,apellido=?,telefono=?,direccion=?,ciudad=?,pais=?,cp=? WHERE id=?");
 /*Enlaza variables como parámetros a una setencia preparada. 
 i: La variable correspondiente tiene tipo entero
 d: La variable correspondiente tiene tipo doble
 s:	La variable correspondiente tiene tipo cadena
 */				
-		mysqli_stmt_bind_param($stmt, "ssii", $name, $surname, $age, $id);
+		mysqli_stmt_bind_param($stmt, "ssssi", $nombre, $apellido, $telefono, $direccion, $ciudad, $pais, $cp, $id);
 //Ejecuta una consulta preparada			
 		mysqli_stmt_execute($stmt);
 //Libera la memoria donde se almacenó el resultado
@@ -56,13 +73,13 @@ $id = mysqli_real_escape_string($mysqli, $id);
 
 
 //Prepara una sentencia SQL para su ejecución. En este caso selecciona el registro a modificar y lo muestra en el formulario.				
-$stmt = mysqli_prepare($mysqli, "SELECT name, surname, age FROM users WHERE id=?");
+$stmt = mysqli_prepare($mysqli, "SELECT nombre, apellido, telefono, direccion, ciudad, pais, cp  FROM cliente WHERE id=?");
 //Enlaza variables como parámetros a una setencia preparada. 
 mysqli_stmt_bind_param($stmt, "i", $id);
 //Ejecuta una consulta preparada
 mysqli_stmt_execute($stmt);
 //Enlaza variables a una setencia preparada para el almacenamiento del resultado
-mysqli_stmt_bind_result($stmt, $name, $surname, $age);
+mysqli_stmt_bind_result($stmt, $nombre, $apellido, $telefono);
 //Obtiene el resultado de una sentencia SQL preparada en las variables enlazadas
 mysqli_stmt_fetch($stmt);
 //Libera la memoria donde se almacenó el resultado		
@@ -73,58 +90,4 @@ mysqli_stmt_close($stmt);
 mysqli_close($mysqli);
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">	
-	<title>Modificación cliente</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"  crossorigin="anonymous">
 
-</head>
-
-<body>
-
-<div>
-	<header>
-		<h1>Panel de Control</h1>
-	</header>
-	
-	<main>				
-	<ul>
-		<li><a href="index.php" >Inicio</a></li>
-		<li><a href="add.html" >Alta</a></li>
-	</ul>
-	<h2>Modificación trabajador/a</h2>
-<!--Formulario de edición. 
-Al hacer click en el botón Guardar, llama a esta misma página: edit.php-->
-	<form action="edit.php" method="post">
-		<div>
-			<label for="name">Nombre</label>
-			<input type="text" name="name" id="name" value="<?php echo $name;?>" required>
-		</div>
-
-		<div>
-			<label for="surname">Apellido</label>
-			<input type="text" name="surname" id="surname" value="<?php echo $surname;?>" required>
-		</div>
-
-		<div>
-			<label for="age">Edad</label>
-			<input type="number" name="age" id="age" value="<?php echo $age;?>" required>
-		</div>
-
-		<div >
-			<input type="hidden" name="id" value=<?php echo $id;?>>
-			<input type="submit" name="modifica" value="Guardar">
-			<input type="button" value="Cancelar" onclick="location.href='index.php'">
-		</div>
-	</form>
-
-	</main>	
-	<footer>
-	Created by the IES Miguel Herrero team &copy; 2024
-  	</footer>
-</div>
-</body>
-</html>
