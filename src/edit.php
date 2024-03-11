@@ -51,7 +51,8 @@ i: La variable correspondiente tiene tipo entero
 d: La variable correspondiente tiene tipo doble
 s:	La variable correspondiente tiene tipo cadena
 */				
-		mysqli_stmt_bind_param($stmt, "ssssi", $nombre, $apellido, $telefono, $direccion, $ciudad, $pais, $cp, $id);
+		mysqli_stmt_bind_param($stmt, "sssssss", $nombre, $apellido, $telefono, $direccion, $ciudad, $pais, $cp, $id);
+
 //Ejecuta una consulta preparada			
 		mysqli_stmt_execute($stmt);
 //Libera la memoria donde se almacenó el resultado
@@ -79,7 +80,7 @@ mysqli_stmt_bind_param($stmt, "i", $id);
 //Ejecuta una consulta preparada
 mysqli_stmt_execute($stmt);
 //Enlaza variables a una setencia preparada para el almacenamiento del resultado
-mysqli_stmt_bind_result($stmt, $nombre, $apellido, $telefono);
+mysqli_stmt_bind_result($stmt, $nombre, $apellido, $telefono, $direccion, $ciudad, $pais, $cp);
 //Obtiene el resultado de una sentencia SQL preparada en las variables enlazadas
 mysqli_stmt_fetch($stmt);
 //Libera la memoria donde se almacenó el resultado		
@@ -90,4 +91,62 @@ mysqli_stmt_close($stmt);
 mysqli_close($mysqli);
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title>Panel de control</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    <div>
+        <header>
+            <h1>Panel de Control</h1>
+        </header>
 
+        <main>
+            <ul>
+                <li><a href="index.php">Inicio</a></li>
+                <li><a href="add.html">Alta</a></li>
+            </ul>
+            <h2>Modificar cliente</h2>
+            <form action="modificar.php" method="post">
+                <input type="hidden" name="id" value="<?php echo $id; ?>">
+                <div>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value="<?php echo $nombre; ?>">
+                </div>
+                <div>
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido" value="<?php echo $apellido; ?>">
+                </div>
+                <div>
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" value="<?php echo $telefono; ?>">
+                </div>
+                <div>
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" id="direccion" name="direccion" value="<?php echo $direccion; ?>">
+                </div>
+                <div>
+                    <label for="ciudad">Ciudad:</label>
+                    <input type="text" id="ciudad" name="ciudad" value="<?php echo $ciudad; ?>">
+                </div>
+                <div>
+                    <label for="pais">País:</label>
+                    <input type="text" id="pais" name="pais" value="<?php echo $pais; ?>">
+                </div>
+                <div>
+                    <label for="cp">Código postal:</label>
+                    <input type="text" id="cp" name="cp" value="<?php echo $cp; ?>">
+                </div>
+                <button type="submit" name="modifica">Guardar</button>
+            </form>
+        </main>
+        <footer>
+            Created by ManuFdzDC &copy; 2024
+        </footer>
+    </div>
+</body>
+</html>
